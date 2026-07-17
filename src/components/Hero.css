@@ -1,0 +1,116 @@
+.hero-section {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background-image: url('https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80');
+  /* Placeholder image of a law office/scales */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 41, 66, 0.7);
+  /* Dark blue overlay */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 0 5%;
+}
+
+.hero-title {
+  color: #fff;
+  margin-bottom: 1.25rem;
+  animation: fadeInDown 1s ease-out;
+  line-height: 1.05;
+}
+
+.hero-title-prefix,
+.hero-title-name {
+  display: block;
+}
+
+.hero-title-prefix {
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-bottom: 0.7rem;
+  text-transform: uppercase;
+}
+
+.hero-title-name {
+  color: var(--accent-color);
+  font-size: 4.25rem;
+  font-weight: 700;
+}
+
+.hero-slogan {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.hero-btn {
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  animation: fadeInUp 1s ease-out 1s both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title-prefix {
+    font-size: 1rem;
+  }
+
+  .hero-title-name {
+    font-size: 2.7rem;
+  }
+
+  .hero-slogan {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-title-name {
+    font-size: 2.25rem;
+  }
+}

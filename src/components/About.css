@@ -1,0 +1,126 @@
+.about-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-text .section-title::after {
+  margin: 1rem 0 0 0;
+}
+
+.about-description {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.about-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.about-logo-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  padding: 3rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%);
+  border: 1px solid #e6e0d7;
+  border-radius: 4px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.about-logo-panel::before {
+  content: '';
+  position: absolute;
+  inset: 1.25rem;
+  border: 1px solid rgba(194, 164, 106, 0.45);
+  border-radius: 4px;
+}
+
+.about-logo-panel::after {
+  content: '';
+  position: absolute;
+  width: 42%;
+  height: 2px;
+  bottom: 3rem;
+  background-color: var(--accent-color);
+}
+
+.about-logo {
+  width: min(100%, 320px);
+  height: auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 992px) {
+  .about-container {
+    grid-template-columns: 1fr;
+  }
+
+  .about-text .section-title {
+    text-align: center !important;
+  }
+
+  .about-text .section-title::after {
+    margin: 1rem auto 0 auto;
+  }
+
+  .about-stats {
+    justify-content: center;
+  }
+
+  .about-logo-panel {
+    min-height: 320px;
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-logo-panel {
+    min-height: 260px;
+    padding: 2rem;
+  }
+
+  .about-logo-panel::before {
+    inset: 0.9rem;
+  }
+
+  .about-logo-panel::after {
+    bottom: 2rem;
+    width: 48%;
+  }
+}

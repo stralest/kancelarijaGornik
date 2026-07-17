@@ -1,0 +1,28 @@
+.footer {
+  background-color: #0a1b2b; /* Slightly darker than primary color */
+  color: #fff;
+  padding: 3rem 10%;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-logo {
+  width: auto;
+  height: 78px;
+  display: block;
+  object-fit: contain;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.footer-copyright {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
