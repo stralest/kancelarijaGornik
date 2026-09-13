@@ -1,5 +1,5 @@
 import './About.css';
-import logoGornik from '../assets/logo-gornik.jpg';
+const logoGornik = '/logo-gornik.jpg';
 
 const About = () => {
   return (
@@ -33,6 +33,10 @@ const About = () => {
             src={logoGornik}
             alt="Advokatska kancelarija Gornik"
             className="about-logo"
+            loading="lazy"
+            decoding="async"
+            width="320"
+            height="302"
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import logoGornik from '../assets/logo-gornik.jpg';
+const logoGornik = '/logo-gornik.jpg';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -28,7 +28,7 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <a href="#home" className="navbar-logo">
-          <img src={logoGornik} alt="Advokatska kancelarija Gornik" className="navbar-logo-image" />
+          <img src={logoGornik} alt="" className="navbar-logo-image" width="320" height="302" fetchPriority="high" />
           <p className="navbar-logo-text">Gornik &amp; partners</p>
         </a>
 

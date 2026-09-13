@@ -1,16 +1,15 @@
-# React + Vite
+# Advokatska kancelarija Gornik
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite/React sajt sa jednom javnom stranicom. `npm run build` generiše statički HTML sadržaj, SEO metapodatke, JSON-LD, `sitemap.xml` i `robots.txt` u `dist/`. `npm run dev` pokreće razvojnu verziju.
 
-Currently, two official plugins are available:
+## SEO podaci
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Javni domen, naziv, opis, kontakt, adresa, radno vreme, društveni profili i javne URL putanje nalaze se u [`seo.config.mjs`](seo.config.mjs). Pre promene ovih podataka proverite da odgovaraju stvarnim informacijama kancelarije. Kontakt detalji koji se prikazuju posetiocima trenutno su i u `src/components/Contact.jsx`.
 
-## React Compiler
+Sitemap sadrži samo `/`, jer su „O nama“, „Oblasti prava“, „Zašto mi“ i „Kontakt“ sekcije iste stranice, a ne zasebne rute. Ako se dodaju nove javne stranice, potrebno je dodati njihove putanje u `publicPaths` i obezbediti jedinstven statički HTML i metapodatke za svaku.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deploy
 
-## Expanding the ESLint configuration
+Objavite sadržaj foldera `dist/`. Hosting podesite da trajno (301 ili 308) preusmeri `http://` na `https://`, kao i `https://advokatgornik.com/` na `https://www.advokatgornik.com/`. Potvrdite da `/robots.txt` i `/sitemap.xml` vraćaju 200 i da ne postoji hosting ili CDN pravilo sa `noindex` ili `X-Robots-Tag: noindex`. Nakon objave, pošaljite `https://www.advokatgornik.com/sitemap.xml` kroz Google Search Console.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Kontakt forma koristi EmailJS vrednosti iz `.env.local` kao i ranije; pogledajte `.env.example`.

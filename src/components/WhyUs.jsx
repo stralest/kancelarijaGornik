@@ -40,7 +40,7 @@ const WhyUs = () => {
                   {reason.icon}
                 </div>
                 <div>
-                  <h4 className="reason-title">{reason.title}</h4>
+                  <h3 className="reason-title">{reason.title}</h3>
                   <p className="reason-desc">{reason.desc}</p>
                 </div>
               </div>
@@ -52,6 +52,10 @@ const WhyUs = () => {
             src="https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&q=80"
             alt="Pravda i zakon"
             className="why-us-image"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
           />
         </div>
       </div>

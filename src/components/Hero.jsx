@@ -2,7 +2,7 @@ import './Hero.css';
 
 const Hero = () => {
   return (
-    <header id="home" className="hero-section">
+    <section id="home" className="hero-section">
       <div className="hero-overlay"></div>
       <div className="hero-content">
         <h1 className="hero-title">
@@ -12,7 +12,7 @@ const Hero = () => {
         <p className="hero-slogan">Tradicija, poverenje i vrhunska pravna zaštita u svakom trenutku.</p>
         <a href="#contact" className="btn hero-btn">Kontaktirajte nas</a>
       </div>
-    </header>
+    </section>
   );
 };
 

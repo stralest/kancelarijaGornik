@@ -1,4 +1,4 @@
-import logoGornik from '../assets/logo-gornik.jpg';
+const logoGornik = '/logo-gornik.jpg';
 import './Footer.css';
 
 const Footer = () => {
@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <img src={logoGornik} alt="Advokatska kancelarija Gornik" className="footer-logo" />
+        <img src={logoGornik} alt="" className="footer-logo" loading="lazy" decoding="async" width="320" height="302" />
         <p className="footer-copyright">
           &copy; {currentYear} Advokatska kancelarija Gornik. Sva prava zadržana.
         </p>
