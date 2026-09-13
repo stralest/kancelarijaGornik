@@ -59,6 +59,50 @@
 .nav-menu {
   display: flex;
   gap: 2rem;
+  margin-left: auto;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1.5rem;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.language-switcher button {
+  border: 0;
+  padding: 0.25rem 0.15rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.language-switcher button.active,
+.language-switcher button:hover {
+  color: var(--accent-color);
+  opacity: 1;
+}
+
+.language-switcher button:focus-visible,
+.mobile-menu-icon:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+.navbar.scrolled .language-switcher {
+  color: var(--text-main);
 }
 
 .nav-link {
@@ -96,6 +140,9 @@
   display: none;
   color: #fff;
   cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: transparent;
 }
 
 .navbar.scrolled .mobile-menu-icon {
@@ -113,6 +160,11 @@
   
   .mobile-menu-icon {
     display: block;
+  }
+
+  .navbar-actions {
+    margin-left: auto;
+    gap: 0.8rem;
   }
 
   .navbar-logo-image {

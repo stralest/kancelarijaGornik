@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useLanguage } from '../i18n/language-context';
 const logoGornik = '/logo-gornik.jpg';
 import './Navbar.css';
 
 const Navbar = () => {
+  const { language, changeLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,13 +18,9 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Početna', href: '#home' },
-    { name: 'O nama', href: '#about' },
-    { name: 'Oblasti prava', href: '#services' },
-    { name: 'Zašto mi', href: '#why-us' },
-    { name: 'Kontakt', href: '#contact' },
-  ];
+  const navLinks = ['#home', '#about', '#services', '#why-us', '#contact'].map((href, index) => ({
+    name: t.nav[index], href,
+  }));
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -43,9 +41,15 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Mobile Menu Icon */}
-        <div className="mobile-menu-icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        <div className="navbar-actions">
+          <div className="language-switcher" role="group" aria-label={t.languageLabel}>
+            <button type="button" lang="sr" className={language === 'sr' ? 'active' : ''} aria-pressed={language === 'sr'} onClick={() => changeLanguage('sr')}>SR</button>
+            <span aria-hidden="true">|</span>
+            <button type="button" lang="en" className={language === 'en' ? 'active' : ''} aria-pressed={language === 'en'} onClick={() => changeLanguage('en')}>EN</button>
+          </div>
+          <button type="button" className="mobile-menu-icon" aria-label={isMobileMenuOpen ? t.closeMenuLabel : t.menuLabel} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
 

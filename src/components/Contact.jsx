@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { useLanguage } from '../i18n/language-context';
 import './Contact.css';
 
 const emailConfig = {
@@ -29,8 +30,17 @@ const InstagramIcon = ({ className }) => (
 );
 
 const Contact = () => {
+  const { language, t } = useLanguage();
+  const c = t.contact;
   const [formStatus, setFormStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInvalid = (event) => {
+    const field = event.currentTarget;
+    field.setCustomValidity(field.validity.valueMissing ? c.requiredField : c.invalidEmail);
+  };
+
+  const clearValidation = (event) => event.currentTarget.setCustomValidity('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,7 +60,7 @@ const Contact = () => {
     const templateParams = {
       title: formData.get('subject'),
       name: formData.get('from_name'),
-      time: new Date().toLocaleString('sr-RS', {
+      time: new Date().toLocaleString(language === 'en' ? 'en-GB' : 'sr-RS', {
         dateStyle: 'medium',
         timeStyle: 'short',
       }),
@@ -92,27 +102,27 @@ const Contact = () => {
 
   return (
     <section id="contact" className="section contact-section">
-      <h2 className="section-title">Kontakt</h2>
+      <h2 className="section-title">{c.title}</h2>
       <div className="contact-container">
         <div className="contact-info">
-          <h3 className="contact-subtitle">Informacije</h3>
+          <h3 className="contact-subtitle">{c.info}</h3>
           <p className="contact-desc">
-            Spremni smo da saslušamo vaš problem i ponudimo najbolje pravno rešenje. Kontaktirajte nas putem forme ili direktno.
+            {c.intro}
           </p>
 
           <div className="info-list">
             <div className="info-item">
               <MapPin className="info-icon" />
               <div>
-                <h4>Adresa</h4>
-                <p>Zelengorska 4, Niš, Srbija</p>
+                <h4>{c.addressLabel}</h4>
+                <p>{c.address}</p>
               </div>
             </div>
 
             <div className="info-item">
               <Phone className="info-icon" />
               <div>
-                <h4>Telefon</h4>
+                <h4>{c.phoneLabel}</h4>
                 <p>+381 69 321 82 75</p>
               </div>
             </div>
@@ -120,7 +130,7 @@ const Contact = () => {
             <div className="info-item">
               <Mail className="info-icon" />
               <div>
-                <h4>Email</h4>
+                <h4>{c.emailLabel}</h4>
                 <p>advgornikmilos@gmail.com</p>
               </div>
             </div>
@@ -145,15 +155,15 @@ const Contact = () => {
             <div className="info-item">
               <Clock className="info-icon" />
               <div>
-                <h4>Radno vreme</h4>
-                <p>Ponedeljak - Petak: 09:00 - 17:00</p>
+                <h4>{c.hoursLabel}</h4>
+                <p>{c.hours}</p>
               </div>
             </div>
           </div>
 
-          <div className="contact-map" aria-label="Lokacija kancelarije na Google mapi">
+          <div className="contact-map" aria-label={c.mapLabel}>
             <iframe
-              title="Gornik & partners - Zelengorska 4, Nis"
+              title={c.mapTitle}
               src="https://www.google.com/maps?q=Zelengorska%204%2C%20Ni%C5%A1%2C%20Srbija&z=18&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -163,36 +173,36 @@ const Contact = () => {
         </div>
 
         <div className="contact-form-container">
-          <h3 className="contact-subtitle">Pošaljite poruku</h3>
+          <h3 className="contact-subtitle">{c.formTitle}</h3>
           <form className="contact-form" onSubmit={handleSubmit}>
             <input type="hidden" name="to_email" value={emailConfig.toEmail} />
             <input type="text" name="_honey" className="form-honey" tabIndex="-1" autoComplete="off" />
             <div className="form-group">
-              <input type="text" name="from_name" placeholder="Vaše Ime i Prezime" required />
+              <input type="text" name="from_name" placeholder={c.namePlaceholder} aria-label={c.namePlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
             </div>
             <div className="form-group">
-              <input type="email" name="from_email" placeholder="Vaša Email adresa" required />
+              <input type="email" name="from_email" placeholder={c.emailPlaceholder} aria-label={c.emailPlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
             </div>
             <div className="form-group">
-              <input type="text" name="subject" placeholder="Naslov poruke" required />
+              <input type="text" name="subject" placeholder={c.subjectPlaceholder} aria-label={c.subjectPlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
             </div>
             <div className="form-group">
-              <textarea name="message" rows="5" placeholder="Sadržaj poruke..." required></textarea>
+              <textarea name="message" rows="5" placeholder={c.messagePlaceholder} aria-label={c.messagePlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required></textarea>
             </div>
             <button type="submit" className="btn btn-submit" disabled={formStatus === 'sending'}>
-              {formStatus === 'sending' ? 'Slanje...' : 'Pošalji poruku'}
+              {formStatus === 'sending' ? c.sending : c.send}
             </button>
             {formStatus === 'success' && (
-              <p className="form-status success">Poruka je poslata.</p>
+              <p className="form-status success">{c.success}</p>
             )}
             {formStatus === 'error' && (
-              <p className="form-status error">Poruka trenutno ne može da se pošalje. Proverite EmailJS podešavanja.</p>
+              <p className="form-status error">{c.error}</p>
             )}
             {formStatus === 'error' && errorMessage && (
-              <p className="form-status error">{`EmailJS odgovor: ${errorMessage}`}</p>
+              <p className="form-status error">{`${c.errorDetails} ${errorMessage}`}</p>
             )}
             {formStatus === 'missing-config' && (
-              <p className="form-status error">Email servis nije podešen. Dodajte EmailJS ključeve u .env.local.</p>
+              <p className="form-status error">{c.missingConfig}</p>
             )}
           </form>
         </div>
