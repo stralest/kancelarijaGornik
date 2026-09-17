@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": { "api/cms.js": { "includeFiles": "server-dist/**", "maxDuration": 30 } },
+  "rewrites": [
+    { "source": "/clanci", "destination": "/api/cms?path=/clanci" },
+    { "source": "/clanci/:slug", "destination": "/api/cms?path=/clanci/:slug" },
+    { "source": "/admin", "destination": "/api/cms?path=/admin" },
+    { "source": "/admin/:path*", "destination": "/api/cms?path=/admin/:path*" },
+    { "source": "/sitemap.xml", "destination": "/api/cms?path=/sitemap.xml" }
+  ],
+  "headers": [
+    { "source": "/admin/:path*", "headers": [
+      { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+      { "key": "Cache-Control", "value": "private, no-store" },
+      { "key": "X-Frame-Options", "value": "DENY" }
+    ] }
+  ]
+}

@@ -4,7 +4,7 @@ import { useLanguage } from '../i18n/language-context';
 const logoGornik = '/logo-gornik.jpg';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ home = true }) => {
   const { language, changeLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,13 +19,14 @@ const Navbar = () => {
   }, []);
 
   const navLinks = ['#home', '#about', '#services', '#why-us', '#contact'].map((href, index) => ({
-    name: t.nav[index], href,
+    name: t.nav[index], href: home ? href : `/${href}`,
   }));
+  navLinks.push({ name: t.cms.insights, href: '/clanci' });
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled || !home ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <a href="#home" className="navbar-logo">
+        <a href={home ? '#home' : '/#home'} className="navbar-logo">
           <img src={logoGornik} alt="" className="navbar-logo-image" width="320" height="302" fetchPriority="high" />
           <p className="navbar-logo-text">Gornik &amp; partners</p>
         </a>

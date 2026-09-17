@@ -23,6 +23,7 @@ try {
   const { default: App } = await server.ssrLoadModule('/src/App.jsx');
   const markup = renderToString(createElement(App));
   let html = await readFile(resolve(dist, 'index.html'), 'utf8');
+  await writeFile(resolve(dist, 'cms-shell.html'), html);
   html = html.replace('<div id="root"></div>', `<div id="root">${markup}</div>`);
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(seo.defaultTitle)}</title>`);
 

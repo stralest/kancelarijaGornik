@@ -1,5 +1,8 @@
+import { cmsTranslations } from './cms-translations';
+
 export const translations = {
   sr: {
+    cms: cmsTranslations.sr,
     pageTitle: 'Advokatska kancelarija Gornik | Pravna pomoć i zastupanje',
     nav: ['Početna', 'O nama', 'Oblasti prava', 'Zašto mi', 'Kontakt'],
     languageLabel: 'Izaberite jezik',
@@ -80,6 +83,7 @@ export const translations = {
     footer: 'Advokatska kancelarija Gornik. Sva prava zadržana.',
   },
   en: {
+    cms: cmsTranslations.en,
     pageTitle: 'Gornik Law Office | Legal Advice and Representation',
     nav: ['Home', 'About Us', 'Practice Areas', 'Why Choose Us', 'Contact'],
     languageLabel: 'Choose language',

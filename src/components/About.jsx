@@ -1,6 +1,6 @@
-import './About.css';
-const logoGornik = '/logo-gornik.jpg';
-import { useLanguage } from '../i18n/language-context';
+import "./About.css";
+const logoGornik = "/logo-gornik.jpg";
+import { useLanguage } from "../i18n/language-context";
 
 const About = () => {
   const { t } = useLanguage();
@@ -8,9 +8,16 @@ const About = () => {
     <section id="about" className="section bg-gray about-section">
       <div className="about-container">
         <div className="about-text">
-          <h2 className="section-title" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>{t.about.title}</h2>
+          <h2
+            className="section-title"
+            style={{ textAlign: "left", margin: "0 0 2rem 0" }}
+          >
+            {t.about.title}
+          </h2>
           {t.about.paragraphs.map((paragraph) => (
-            <p className="about-description" key={paragraph}>{paragraph}</p>
+            <p className="about-description" key={paragraph}>
+              {paragraph}
+            </p>
           ))}
           <div className="about-stats">
             <div className="stat-item">

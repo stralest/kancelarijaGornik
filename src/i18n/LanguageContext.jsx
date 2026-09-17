@@ -18,7 +18,7 @@ export function LanguageProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = translations[language].pageTitle;
+    if (window.location.pathname === '/') document.title = translations[language].pageTitle;
   }, [language]);
 
   const changeLanguage = (nextLanguage) => {

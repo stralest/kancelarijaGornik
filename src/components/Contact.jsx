@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import { useLanguage } from '../i18n/language-context';
-import './Contact.css';
+import { useState } from "react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useLanguage } from "../i18n/language-context";
+import "./Contact.css";
 
 const emailConfig = {
   serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
   templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
   publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-  toEmail: import.meta.env.VITE_CONTACT_TO_EMAIL || 'moep071@gmail.com',
+  toEmail: import.meta.env.VITE_CONTACT_TO_EMAIL || "moep071@gmail.com",
 };
 
 const InstagramIcon = ({ className }) => (
@@ -32,59 +32,68 @@ const InstagramIcon = ({ className }) => (
 const Contact = () => {
   const { language, t } = useLanguage();
   const c = t.contact;
-  const [formStatus, setFormStatus] = useState('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [formStatus, setFormStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInvalid = (event) => {
     const field = event.currentTarget;
-    field.setCustomValidity(field.validity.valueMissing ? c.requiredField : c.invalidEmail);
+    field.setCustomValidity(
+      field.validity.valueMissing ? c.requiredField : c.invalidEmail,
+    );
   };
 
-  const clearValidation = (event) => event.currentTarget.setCustomValidity('');
+  const clearValidation = (event) => event.currentTarget.setCustomValidity("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!emailConfig.serviceId || !emailConfig.templateId || !emailConfig.publicKey) {
-      setFormStatus('missing-config');
+    if (
+      !emailConfig.serviceId ||
+      !emailConfig.templateId ||
+      !emailConfig.publicKey
+    ) {
+      setFormStatus("missing-config");
       return;
     }
 
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    if (formData.get('_honey')) {
+    if (formData.get("_honey")) {
       return;
     }
 
     const templateParams = {
-      title: formData.get('subject'),
-      name: formData.get('from_name'),
-      time: new Date().toLocaleString(language === 'en' ? 'en-GB' : 'sr-RS', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
+      title: formData.get("subject"),
+      name: formData.get("from_name"),
+      time: new Date().toLocaleString(language === "en" ? "en-GB" : "sr-RS", {
+        dateStyle: "medium",
+        timeStyle: "short",
       }),
-      message: formData.get('message'),
-      email: formData.get('from_email'),
+      message: formData.get("message"),
+      email: formData.get("from_email"),
       to_email: emailConfig.toEmail,
     };
 
-    setFormStatus('sending');
-    setErrorMessage('');
+    setFormStatus("sending");
+    setErrorMessage("");
 
     try {
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        "https://api.emailjs.com/api/v1.0/email/send",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            service_id: emailConfig.serviceId,
+            template_id: emailConfig.templateId,
+            user_id: emailConfig.publicKey,
+            template_params: templateParams,
+          }),
         },
-        body: JSON.stringify({
-          service_id: emailConfig.serviceId,
-          template_id: emailConfig.templateId,
-          user_id: emailConfig.publicKey,
-          template_params: templateParams,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const responseText = await response.text();
@@ -92,11 +101,11 @@ const Contact = () => {
       }
 
       form.reset();
-      setFormStatus('success');
+      setFormStatus("success");
     } catch (error) {
-      console.error('EmailJS send failed:', error);
+      console.error("EmailJS send failed:", error);
       setErrorMessage(error.message);
-      setFormStatus('error');
+      setFormStatus("error");
     }
   };
 
@@ -106,9 +115,7 @@ const Contact = () => {
       <div className="contact-container">
         <div className="contact-info">
           <h3 className="contact-subtitle">{c.info}</h3>
-          <p className="contact-desc">
-            {c.intro}
-          </p>
+          <p className="contact-desc">{c.intro}</p>
 
           <div className="info-list">
             <div className="info-item">
@@ -176,32 +183,74 @@ const Contact = () => {
           <h3 className="contact-subtitle">{c.formTitle}</h3>
           <form className="contact-form" onSubmit={handleSubmit}>
             <input type="hidden" name="to_email" value={emailConfig.toEmail} />
-            <input type="text" name="_honey" className="form-honey" tabIndex="-1" autoComplete="off" />
+            <input
+              type="text"
+              name="_honey"
+              className="form-honey"
+              tabIndex="-1"
+              autoComplete="off"
+            />
             <div className="form-group">
-              <input type="text" name="from_name" placeholder={c.namePlaceholder} aria-label={c.namePlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
+              <input
+                type="text"
+                name="from_name"
+                placeholder={c.namePlaceholder}
+                aria-label={c.namePlaceholder}
+                onInvalid={handleInvalid}
+                onInput={clearValidation}
+                required
+              />
             </div>
             <div className="form-group">
-              <input type="email" name="from_email" placeholder={c.emailPlaceholder} aria-label={c.emailPlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
+              <input
+                type="email"
+                name="from_email"
+                placeholder={c.emailPlaceholder}
+                aria-label={c.emailPlaceholder}
+                onInvalid={handleInvalid}
+                onInput={clearValidation}
+                required
+              />
             </div>
             <div className="form-group">
-              <input type="text" name="subject" placeholder={c.subjectPlaceholder} aria-label={c.subjectPlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required />
+              <input
+                type="text"
+                name="subject"
+                placeholder={c.subjectPlaceholder}
+                aria-label={c.subjectPlaceholder}
+                onInvalid={handleInvalid}
+                onInput={clearValidation}
+                required
+              />
             </div>
             <div className="form-group">
-              <textarea name="message" rows="5" placeholder={c.messagePlaceholder} aria-label={c.messagePlaceholder} onInvalid={handleInvalid} onInput={clearValidation} required></textarea>
+              <textarea
+                name="message"
+                rows="5"
+                placeholder={c.messagePlaceholder}
+                aria-label={c.messagePlaceholder}
+                onInvalid={handleInvalid}
+                onInput={clearValidation}
+                required
+              ></textarea>
             </div>
-            <button type="submit" className="btn btn-submit" disabled={formStatus === 'sending'}>
-              {formStatus === 'sending' ? c.sending : c.send}
+            <button
+              type="submit"
+              className="btn btn-submit"
+              disabled={formStatus === "sending"}
+            >
+              {formStatus === "sending" ? c.sending : c.send}
             </button>
-            {formStatus === 'success' && (
+            {formStatus === "success" && (
               <p className="form-status success">{c.success}</p>
             )}
-            {formStatus === 'error' && (
+            {formStatus === "error" && (
               <p className="form-status error">{c.error}</p>
             )}
-            {formStatus === 'error' && errorMessage && (
+            {formStatus === "error" && errorMessage && (
               <p className="form-status error">{`${c.errorDetails} ${errorMessage}`}</p>
             )}
-            {formStatus === 'missing-config' && (
+            {formStatus === "missing-config" && (
               <p className="form-status error">{c.missingConfig}</p>
             )}
           </form>
