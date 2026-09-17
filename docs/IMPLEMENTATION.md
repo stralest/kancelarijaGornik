@@ -57,7 +57,7 @@ and `seo.config.mjs` were not edited.
   read-more links, category filtering and translated UI.
 - `/clanci/:slug`: server-rendered legal text, title/description, canonical,
   Open Graph/Twitter tags and Article JSON-LD. 404/noindex for absent/draft URLs.
-- `/admin`: email/password login, explicit role check, recovery/logout, dashboard,
+- `/admin`: email/password login, explicit role check, logout, dashboard,
   CRUD, status, category CRUD, editor, preview, draft/publication, confirmation.
 - TipTap: paragraphs, H2/H3, bold, italic, lists, links, undo/redo. Public/preview
   HTML comes only from an escaping allowlist renderer over JSON.
@@ -159,7 +159,7 @@ No TipTap editor is loaded just to browse the homepage or public article pages.
 ## Required manual work and operating instructions
 
 Follow [CMS-SETUP.md](CMS-SETUP.md) for project creation, migration, RLS, private
-bucket, Auth signup disabling, lawyer account/role, password recovery, environment
+bucket, Auth signup disabling, lawyer account/role, environment
 variables, local running, Vercel setup, and the first-article workflow.
 
 Follow [SECURITY-TESTING.md](SECURITY-TESTING.md) for all 16 requested security

@@ -353,9 +353,6 @@ export default function Admin() {
   const [access, setAccess] = useState("checking");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
-  const [recovery, setRecovery] = useState(
-    () => window.location.pathname === "/admin/reset-password",
-  );
   useEffect(() => {
     document.title = `${c.admin} | Advokatska kancelarija Gornik`;
     let robots = document.querySelector('meta[name="robots"]');
@@ -398,12 +395,8 @@ export default function Admin() {
     } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_OUT") {
         ++sequence;
-        if (active) {
-          setAccess("login");
-          setRecovery(false);
-        }
+        if (active) setAccess("login");
       } else {
-        if (event === "PASSWORD_RECOVERY" && active) setRecovery(true);
         queueMicrotask(check);
       }
     });
@@ -427,7 +420,6 @@ export default function Admin() {
   }, []);
   async function logout() {
     setAccess("login");
-    setRecovery(false);
     setMessage("");
     const { error } = await supabase.auth.signOut({ scope: "local" });
     if (error) setMessage(c.operationFailed);
@@ -476,45 +468,6 @@ export default function Admin() {
         </button>
       </>
     );
-  if (access === "admin" && recovery)
-    return (
-      <form
-        className="cms-login"
-        onSubmit={async (event) => {
-          event.preventDefault();
-          setBusy(true);
-          setMessage("");
-          const password = new FormData(event.currentTarget).get("password");
-          try {
-            const { error } = await supabase.auth.updateUser({ password });
-            if (error) throw error;
-            window.history.replaceState(null, "", "/admin");
-            setRecovery(false);
-            setMessage(c.passwordSaved);
-          } catch {
-            setMessage(c.operationFailed);
-          } finally {
-            setBusy(false);
-          }
-        }}
-      >
-        <h1>{c.changePassword}</h1>
-        <label>
-          {c.newPassword}
-          <input
-            type="password"
-            name="password"
-            minLength={12}
-            required
-            autoComplete="new-password"
-          />
-        </label>
-        <button className="cms-button" disabled={busy}>
-          {c.changePassword}
-        </button>
-        {message && <p role="status">{message}</p>}
-      </form>
-    );
   if (access === "admin") return <Dashboard logout={logout} />;
   return (
     <form className="cms-login" onSubmit={login}>
@@ -541,30 +494,6 @@ export default function Admin() {
       </label>
       <button className="cms-button" disabled={busy}>
         {busy ? c.loading : c.login}
-      </button>
-      <button
-        className="cms-button secondary"
-        type="button"
-        disabled={busy}
-        onClick={async (event) => {
-          const emailField = event.currentTarget.form.elements.email;
-          if (!emailField.reportValidity()) return;
-          setBusy(true);
-          setMessage("");
-          try {
-            const { error } = await supabase.auth.resetPasswordForEmail(
-              emailField.value.trim(),
-              { redirectTo: `${window.location.origin}/admin/reset-password` },
-            );
-            setMessage(error ? c.operationFailed : c.resetSent);
-          } catch {
-            setMessage(c.operationFailed);
-          } finally {
-            setBusy(false);
-          }
-        }}
-      >
-        {c.reset}
       </button>
       {message && (
         <p className="cms-notice" role="status">

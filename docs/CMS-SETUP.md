@@ -93,19 +93,11 @@ and [Storage access control](https://supabase.com/docs/guides/storage/security/a
    general/user-signup settings. Disable anonymous sign-ins and unused providers.
    Hiding a signup button alone would not prevent registration.
 2. Set the Auth **Site URL** to `https://www.advokatgornik.com`.
-3. Add these exact allowed redirect URLs:
-   - `https://www.advokatgornik.com/admin/reset-password`
-   - `http://localhost:5173/admin/reset-password` for development
-   - `http://127.0.0.1:4173/admin/reset-password` for production preview
-   - The exact preview deployment's `/admin/reset-password` URL if testing there.
-4. Use a strong password policy (at least 12 characters) and keep Supabase's
+3. Use a strong password policy (at least 12 characters) and keep Supabase's
    Auth rate limits enabled. Do not enable public signup for testing login.
-5. For production password reset delivery, configure an SMTP provider in Auth
-   email settings. The built-in mail service has restrictive limits; verify
-   delivery to the lawyer's real email before relying on it.
 
 References: [Auth configuration](https://supabase.com/docs/guides/auth/general-configuration),
-[password authentication and recovery](https://supabase.com/docs/guides/auth/passwords).
+[password authentication](https://supabase.com/docs/guides/auth/passwords).
 
 ## 4. Create and explicitly authorize the lawyer
 
@@ -130,12 +122,7 @@ References: [Auth configuration](https://supabase.com/docs/guides/auth/general-c
    where user_id = 'REPLACE_WITH_AUTH_USER_UUID'::uuid;
    ```
 
-6. To reset a password, use **Zaboravljena lozinka / Forgot password** on `/admin`,
-   enter the account email, and follow the email link to `/admin/reset-password`.
-   Enter a new password there. This requires an authenticated recovery session
-   and the explicit admin role. If mail delivery fails, the project operator
-   should repair SMTP/redirect settings and send the reset again through Auth.
-   Passwords are managed by Supabase Auth, never by application configuration.
+Passwords are managed by Supabase Auth, never by application configuration.
 
 ## 5. Environment variables
 
